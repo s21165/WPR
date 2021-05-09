@@ -64,24 +64,24 @@
     
 
 <?php
-if (isset($_POST["ppl"]) && isset($_POST["name"]) && isset($_POST["surname"]) &&
+if (isset($_POST["name"]) && isset($_POST["surname"]) &&
     isset($_POST["tn"]) && isset($_POST["D1"]) && isset($_POST["D2"])) {
-    $ppl = $_POST["ppl"];
-    $name = $_POST["name"];
-    $surname = $_POST["surname"];
-    $city = $_POST["city"];
-	$code = $_POST["code"];
-	$street = $_POST["street"];
-	$building = $_POST["building"];
-    $tn = $_POST["tn"];
-    $email = $_POST["email"];
-    $D1 = $_POST["D1"];
-    $D2 = $_POST["D2"];
-    $H1 = $_POST["H1"];
-	$H2 = $_POST["H2"];
-	
+    
+    $allData = array(
+    $name = $_POST["name"]?? "",
+    $surname = $_POST["surname"]?? "",
+    $city = $_POST["city"]?? "",
+	$code = $_POST["code"]?? "",
+	$street = $_POST["street"]?? "",
+	$building = $_POST["building"]?? "",
+    $tn = $_POST["tn"]?? "",
+    $email = $_POST["email"]?? "",
+    $D1 = $_POST["D1"]?? "",
+    $D2 = $_POST["D2"]?? "",
+    $H1 = $_POST["H1"]?? "",
+	$H2 = $_POST["H2"] ?? "");
 
-    echo (" <div><ul> People number:" . $ppl . "<br>" . "<br>" .    "<li>Name:" . --$name . "<br>" .
+    echo (" <div><ul>" . "<li>Name:" . --$name . "<br>" .
         "<li>Surname:" .$surname . "<br>" .
         "<li>City:" . $city . "<br>" .
 		"<li>Post code:" . $code . "<br>" .
@@ -108,24 +108,39 @@ if (isset($_POST["ppl"]) && isset($_POST["name"]) && isset($_POST["surname"]) &&
     }
 
 if($name!=null && $surname!=null ){
+    
     $name = filter_input(INPUT_POST, "name"); 
     $surname = filter_input(INPUT_POST, "surname");
-     $fp = fopen('3.3.csv', 'a+');
+     $fp = fopen('3.3.csv', 'a+');    
+    if (filesize('3.3.csv') == 0){
+    
     if ($fp) {
-    $fields = array($name);
-    fputcsv($fp, $fields);  
-    $fields = array($surname);
-   
-    fputcsv($fp, $fields);    
+        $inputs=["name;surname"];
+       // $input = filter_input(INPUT_POST, "inputs"); 
+        //$base = array($input);
+        fputcsv($fp, $inputs);
         
-        print "Data Written";
+        fputcsv($fp,$allData,';');
+       
+        
+     
+        
+       
+        print " <br> Data Written on new file";
         fclose($fp);
-        } else {
+    }
+    }else{
+        $fp = fopen('3.3.csv', 'a+'); 
+      
+          fputcsv($fp,$allData,';');
+        
+        print " <br>Data Written on existing file";
+        fclose($fp);
+    }
+    }
+} else {
     die("Unable to open file");
-}
+} 
+
 	
-
-}
-
-	}
 ?>
