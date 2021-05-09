@@ -19,34 +19,34 @@
             <input type="text" name="surname" required>
              <br>      
            City
-            <input type="text" name="city"  >
+            <input type="text" name="city" required >
             <br>
             Post Code
-            <input type="text" name="code" pattern="[0-9]{2}-[0-9]{3}" maxlength="6" >
+            <input type="text" name="code" pattern="[0-9]{2}-[0-9]{3}" maxlength="6" required >
             <br>
             Street
-         <input type="text" name="street" >
+         <input type="text" name="street"  required>
             <br>
             Bulding number
-            <input type="text" name="building" >
+            <input type="text" name="building"required >
             <br>
            Phone number(9 digit)
-            <input type="tel" name="tn" size="10"  pattern="[0-9]{9}"   >
+            <input type="tel" name="tn" size="10"  pattern="[0-9]{9}"  required >
             <br>
             Email
-            <input type="email" name="email"  >
+            <input type="email" name="email" required >
             <br>
            From 
-            <input type="date" name="D1"  >
+            <input type="date" name="D1" required >
             <br>
             Untill
-            <input type="date" name="D2"  >
+            <input type="date" name="D2" required >
             <br>
             Arrival time
-            <input type="time" name="H1" >
+            <input type="time" name="H1" required>
             <br>
             Departure time
-            <input type="time" name="H2" >
+            <input type="time" name="H2" required >
             <br>
             Kid
             <input type="checkbox" name="kid" >
@@ -113,7 +113,7 @@ if($name!=null && $surname!=null ){
      $fp = fopen('3.3.csv', 'a+');  
     if ($fp) {
          if (filesize('3.3.csv') == 0){
-        $inputs=["name;surname"];
+        $inputs=["name;surname;city;postcode;Street;Bulding number;Phone number;Email;From;Untill;Arrival time;Departure time "];
 
         fputcsv($fp, $inputs);
         fputcsv($fp,$allData,';');
