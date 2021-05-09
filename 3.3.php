@@ -56,7 +56,7 @@
            Smoking room
             <td><input type="checkbox" name="smoke">
             <br>
-            <input type="submit" value="SEND"/>
+            <input type="submit" value="wczytaj"/>
                 </div>
     </label>
     
@@ -107,40 +107,41 @@ if (isset($_POST["name"]) && isset($_POST["surname"]) &&
         echo "Smoking room" . "<br>";
     }
 
-if($name!=null && $surname!=null ){
-    
+if($name!=null && $surname!=null ){    
     $name = filter_input(INPUT_POST, "name"); 
     $surname = filter_input(INPUT_POST, "surname");
-     $fp = fopen('3.3.csv', 'a+');    
-    if (filesize('3.3.csv') == 0){
-    
+     $fp = fopen('3.3.csv', 'a+');  
     if ($fp) {
+         if (filesize('3.3.csv') == 0){
         $inputs=["name;surname"];
-       // $input = filter_input(INPUT_POST, "inputs"); 
-        //$base = array($input);
-        fputcsv($fp, $inputs);
-        
-        fputcsv($fp,$allData,';');
-       
-        
-     
-        
-       
-        print " <br> Data Written on new file";
-        fclose($fp);
-    }
-    }else{
-        $fp = fopen('3.3.csv', 'a+'); 
-      
-          fputcsv($fp,$allData,';');
-        
-        print " <br>Data Written on existing file";
-        fclose($fp);
-    }
-    }
-} else {
-    die("Unable to open file");
-} 
 
-	
+        fputcsv($fp, $inputs);
+        fputcsv($fp,$allData,';');
+
+       
+        print " <br> Data Written on new file <br><br>";
+        fclose($fp);
+    }else{
+        $fp = fopen('3.3.csv', 'a+');      
+          fputcsv($fp,$allData,';');        
+        print " <br>Data Written on existing file <br><br>";
+        fclose($fp);
+         }
+} else { die("Unable to open file");}
+    
+
+if (($handle = fopen("3.3.csv", "r")) !== FALSE) {
+    while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
+        $num = count($data);
+       
+       
+        for ($c=0; $c < $num; $c++) {
+            
+            echo $data[$c] . "<br />\n";
+        }
+    }
+    fclose($handle);
+}
+ } 
+}	
 ?>
